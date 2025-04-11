@@ -2,7 +2,6 @@ import pygame
 import sys
 import time
 import subprocess
-import serial
 
 # Inicializar Pygame
 pygame.init()
@@ -17,23 +16,25 @@ height = screen_info.current_h
 # Colores
 white = (255, 255, 255)
 yellow = (255, 255, 0)
+black = (0, 0, 0)
 
 # Crear la ventana de Pygame en modo pantalla completa
 screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
 
 # Establecer el título de la ventana
-pygame.display.set_caption("Botones Pygame")
+pygame.display.set_caption("Undertale")
 
-# Cargar la imagen de espera
-waiting_image = pygame.image.load('images/undertale_letras.png')  # Reemplaza 'path/to/waiting_image.png' con la ruta de tu imagen
-
-# Redimensionar la imagen de espera
+# Pantalla de espera
+screen.fill(black)
+waiting_image = pygame.image.load('images/undertale_letras.png')
 waiting_image = pygame.transform.scale(waiting_image, (width, height))
-
-# Mostrar la imagen de espera durante 3 segundos
 screen.blit(waiting_image, (0, 0))
 pygame.display.flip()
 time.sleep(3)
+
+# Limpiar la pantalla después de la espera
+screen.fill(black)
+pygame.display.flip()
 
 # Inicializar el reproductor de música
 pygame.mixer.init()
@@ -44,8 +45,8 @@ pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play(-1)
 
 # Cargar las imágenes
-image_top = pygame.image.load('images/pilares_menu.png')  # Reemplaza 'path/to/top_image.png' con la ruta de tu imagen
-image_bottom = pygame.image.load('images/toriel_menu.png')  # Reemplaza 'path/to/bottom_image.png' con la ruta de tu imagen
+image_top = pygame.image.load('images/pilares_menu.png')
+image_bottom = pygame.image.load('images/toriel_menu.png')
 
 # Redimensionar las imágenes
 new_width_top = int(width * 0.3)
@@ -70,9 +71,6 @@ button_text_color_selected = yellow
 
 selected_button = "Jugar"
 
-# Conexión con el puerto serial del Arduino
-arduino = serial.Serial('/dev/ttyUSB0', 9600)  # Reemplaza 'COMX' con el puerto al que está conectado tu Arduino
-
 # Función para salir del programa
 def salir():
     pygame.quit()
@@ -84,23 +82,18 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-
-    # Leer desde el puerto serial del Arduino
-    if arduino.in_waiting > 0:
-        button_press = arduino.read().decode().strip()
-        
-        if button_press == 'L':  # Pulsador izquierdo
-            selected_button = "Jugar"
-        elif button_press == 'R':  # Pulsador derecho
-            selected_button = "Salir"
-        elif button_press == 'E':  # Pulsador de "Enter"
-            if selected_button == "Jugar":
-                # Lógica para el botón "Jugar" aquí si es necesario
-                pygame.mixer.music.pause()  # Pausar la música del primer archivo
-                subprocess.run(["python3", "undertale_juego.py"])  # Ejecutar el segundo archivo .py
-                pygame.mixer.music.unpause()  # Reanudar la música del primer archivo después de ejecutar el segundo archivo
-            elif selected_button == "Salir":
-                salir()
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                selected_button = "Jugar"
+            elif event.key == pygame.K_RIGHT:
+                selected_button = "Salir"
+            elif event.key == pygame.K_RETURN:
+                if selected_button == "Jugar":
+                    pygame.mixer.music.pause()
+                    subprocess.run(["python3", "undertale_juego.py"])
+                    pygame.mixer.music.unpause()
+                elif selected_button == "Salir":
+                    salir()
 
     # Limpiar la pantalla
     screen.fill((0, 0, 0))
@@ -135,7 +128,7 @@ while True:
     screen.blit(image_top, ((width - image_top_width) // 2, 10))
 
     # Ajustar la posición de la imagen inferior
-    image_bottom_y = height - image_bottom_height - 30  # Ajusta la posición de acuerdo a tus necesidades
+    image_bottom_y = height - image_bottom_height - 30
     screen.blit(image_bottom, ((width - image_bottom_width) // 2, image_bottom_y))
 
     # Agregar texto gris debajo de la imagen inferior
