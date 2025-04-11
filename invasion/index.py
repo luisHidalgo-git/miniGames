@@ -21,32 +21,32 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 # CARGAR IMAGEN DE FONDO
-asset_background = resource_path('images/backgrounds.png')  # Ajusta la ruta si es necesario
+asset_background = resource_path('images/backgrounds.png')
 background = pygame.image.load(asset_background)
 print(f"Ruta del fondo: {asset_background}")
 
 # CARGAR ICONOS DE VENTANA
-asset_icon = resource_path('invasion/images/ufo.png')
+asset_icon = resource_path('images/ufo.png')  # Removed extra 'invasion/' from path
 icon = pygame.image.load(asset_icon)
 
 # CARGAR SONIDO DE FONDO
-asset_sound = resource_path('invasion/audios/background_music.mp3')
+asset_sound = resource_path('audios/background_music2.mp3')  # Removed extra 'invasion/' from path
 pygame.mixer.music.load(asset_sound)
 
 # CARGAR IMAGEN DE JUGADOR
-asset_playerimg = resource_path('invasion/images/space-invaders.png')
+asset_playerimg = resource_path('images/space-invaders.png')  # Removed extra 'invasion/' from path
 playerimg = pygame.image.load(asset_playerimg)
 
 # CARGAR IMAGEN DE BALA
-asset_bulletimg = resource_path('invasion/images/bullet.png')
+asset_bulletimg = resource_path('images/bullet.png')  # Removed extra 'invasion/' from path
 bulletimg = pygame.image.load(asset_bulletimg)
 
 # CARGAR FUENTE PARA TEXTO DE GAME OVER
-asset_over_font = resource_path('invasion/fonts/RAVIE.TTF')
+asset_over_font = resource_path('fonts/RAVIE.TTF')  # Removed extra 'invasion/' from path
 over_font = pygame.font.Font(asset_over_font, 60)
 
 # CARGAR FUENTE PARA PUNTAJE
-asset_font = resource_path('invasion/fonts/comicbd.ttf')
+asset_font = resource_path('fonts/comicbd.ttf')  # Removed extra 'invasion/' from path
 font = pygame.font.Font(asset_font, 32)
 
 # ESTABLECER TITULO DE VENTANA
@@ -78,10 +78,10 @@ no_of_enemies = 10
 #SE INICIALIZAN LAS VARIABLES PARA GUARDAR LAS POSICIONES DE LOS ENEMIGOS
 for i in range(no_of_enemies):
     #enemigo 1
-    enemy1 = resource_path('invasion/images/enemy1.png')
+    enemy1 = resource_path('images/enemy1.png')  # Removed extra 'invasion/' from path
     enemyimg.append(pygame.image.load(enemy1))
     #enemigo 2
-    enemy2 = resource_path('invasion/images/enemy2.png')
+    enemy2 = resource_path('images/enemy2.png')  # Removed extra 'invasion/' from path
     enemyimg.append(pygame.image.load(enemy2))
 
     #SE ASIGNA POSICION ALEATORIA EN X Y Y PARA ENEMIGOS
