@@ -21,8 +21,9 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 # CARGAR IMAGEN DE FONDO
-asset_background = resource_path('invasion/images/background.png')
+asset_background = resource_path('images/backgrounds.png')  # Ajusta la ruta si es necesario
 background = pygame.image.load(asset_background)
+print(f"Ruta del fondo: {asset_background}")
 
 # CARGAR ICONOS DE VENTANA
 asset_icon = resource_path('invasion/images/ufo.png')
