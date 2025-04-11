@@ -99,7 +99,8 @@ def moveBall():
         ballMoveY = -ballMoveY
         score += 1
 
-background_image = pygame.image.load("imagenes/forest.png")
+background_image = pygame.image.load("imagenes/image.png")
+background_image = pygame.transform.scale(background_image, (window_width, window_height))
 
 def locateObjects():
     window.blit(background_image, (0, 0))
