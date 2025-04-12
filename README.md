@@ -6,3 +6,8 @@ python3 -m venv venv && source venv/bin/activate
 ```
 pip install -r requirements.txt
 ```
+### Jugar cualquier minijuego
+#### Entrar a cualquier juego con cd y escribir
+```
+python3 index.py
+```
