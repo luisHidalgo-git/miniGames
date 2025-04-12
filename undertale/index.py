@@ -24,22 +24,38 @@ screen = pygame.display.set_mode((width, height), pygame.FULLSCREEN)
 # Establecer el título de la ventana
 pygame.display.set_caption("Undertale")
 
-# Pantalla de espera
+# Inicializar el reproductor de música
+pygame.mixer.init()
+
+# Cargar y escalar la imagen de introducción
+intro_image = pygame.image.load('images/undertale_letras.png')
+intro_image_scaled = pygame.transform.scale(intro_image, (width, height))
+
+# Pantalla de espera con música de intro
 screen.fill(black)
-waiting_image = pygame.image.load('images/undertale_letras.png')
-waiting_image = pygame.transform.scale(waiting_image, (width, height))
-screen.blit(waiting_image, (0, 0))
+screen.blit(intro_image_scaled, (0, 0))
 pygame.display.flip()
-time.sleep(3)
+
+# Reproducir la música de intro
+intro_sound = pygame.mixer.Sound('sound/intro.mp3')
+intro_sound.play()
+
+# Mantener la imagen visible durante 3 segundos
+start_time = time.time()
+while time.time() - start_time < 3:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+    pygame.display.flip()
+
+intro_sound.stop()
 
 # Limpiar la pantalla después de la espera
 screen.fill(black)
 pygame.display.flip()
 
-# Inicializar el reproductor de música
-pygame.mixer.init()
-
-# Cargar la canción
+# Cargar y reproducir la música del menú
 pygame.mixer.music.load('sound/undertale_menu.mp3')
 pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play(-1)
